@@ -1,0 +1,49 @@
+*
+{
+	margin: 0px;
+	padding: 0px;
+/**	border: 0px;**/
+}
+/**body
+{
+	background: #EEE6FF;
+}**/
+/* nav */
+.navbar .navbar-brand 
+{
+	padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+	font-size: 20px;
+	font-weight: bold;
+	color: blue;
+	text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+	font-family: arial;
+}
+.navbar span
+{
+	color: orange;
+}
+/* content */
+div#content
+{
+	background: #EEE6FF;
+	min-height: 580px;
+	width: 1000px;
+	margin: 2px auto;
+	margin-top: -15px;
+	padding: 5px 5px 5px 5px;
+}
+p#pMessage
+{
+	padding: 10px;
+	text-align: center;
+	color: #B30000;
+	font-size: 12px;
+}
+/* footer */
+.panel-footer
+{
+	font-size: 12px;
+	text-align: center;
+	width: 1000px;
+	margin: 0px auto;
+}

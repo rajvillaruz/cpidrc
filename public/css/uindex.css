@@ -1,0 +1,55 @@
+*
+{
+	margin: 0px;
+	padding: 0px;
+/**	border: 0px;**/
+}
+/**body
+{
+	background: #EEE6FF;
+}**/
+/* nav */
+.navbar
+{
+	margin: 20px 10px 30px 10px;
+}
+
+.navbar .navbar-brand 
+{
+	padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+	font-family: arial;
+}
+/* content */
+div#content
+{
+	/*background: #EEE6FF;*/
+	min-height: 540px;
+	/* width: 1000px; */
+	margin: 2px 10px;
+	/* margin-top: -15px; */
+	padding: 5px 5px 5px 5px;
+}
+#panelBody
+{
+	background: #555555;
+	color: #ffffff;
+}
+
+p#pMessage
+{
+	padding: 10px;
+	text-align: center;
+	color: #B30000;
+	font-size: 12px;
+}
+/* footer */
+.panel-footer
+{
+	font-size: 12px;
+	text-align: center;
+	/*width: 1000px;*/
+	margin: 0px 10px;
+}
