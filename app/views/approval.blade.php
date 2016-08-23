@@ -154,6 +154,64 @@
 								</div>
 								<div class="row">
 									{{ Form::open(array('method' => 'PATCH', 'route' => array('approval.update', $checkin->id), 'class'=>'form-horizontal', 'role'=>'form')) }}
+										{{ Form::hidden('requestType', $checkin->requesttype) }}
+										<div class="form-group">
+											<div class="col-sm-2"></div>
+											<div class="col-sm-10">
+												<div class="checkbox input-sm">
+													@if($checkin->status == 3)
+														@if($checkin->requesttype == 1)
+															<label>
+																<input type="checkbox" name="checkbox1" value="1">
+																Upload ISO Document
+															</label>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															<label>
+																<input type="checkbox" name="checkbox2" value="1">
+																Update Master List of Documents
+															</label>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															<label>
+																<input type="checkbox" name="checkbox3" value="1">
+																Inform unit that document has been approved and available in our google sites.
+															</label>
+														@endif
+														@if($checkin->requesttype == 2)
+															<label>
+																<input type="checkbox" name="checkbox1" value="1">
+																Upload ISO Document
+															</label>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															<label>
+																<input type="checkbox" name="checkbox2" value="1">
+																Remove old document and transfer to obsolete folder
+															</label>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															<label>
+																<input type="checkbox" name="checkbox3" value="1">
+																Update Master List of Documents
+															</label>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															<label>
+																<input type="checkbox" name="checkbox4" value="1">
+																Inform unit that document has been approved and available in our google sites.
+															</label>
+														@endif
+														@if($checkin->requesttype == 3)
+															<label>
+																<input type="checkbox" name="checkbox1" value="1">
+																Update Master List of Documents
+															</label>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															<label>
+																<input type="checkbox" name="checkbox2" value="1">
+																Inform unit that document has been deleted in our google sites.
+															</label>
+														@endif
+													@endif
+												</div>
+											</div>
+										</div>	
 										<div class="form-group">
 											<div class="col-sm-2"><p class="text-right"><small><strong>Note</strong></small></p></div>
 											<div class="col-sm-6 @if ($errors->has('note' . $checkin['id'])) has-error @endif">

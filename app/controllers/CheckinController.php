@@ -22,13 +22,17 @@ class CheckinController extends \BaseController {
 				$approval = Checkin::where('status', 1)->count();
 				$approval2 = Checkin::where('status', 2)->count();
 				$approval3 = Checkin::where('status', 3)->count();
-				
+				$aUnit = Unit::where('status', 1)->orderBy('name')->lists('name', 'id');
+				$aDocType = DocType::where('status', 1)->orderBy('name')->lists('name', 'id');
 				return Response::make(View::make('checkin')
-					->with('user', $user)
-					->with('approval', $approval)
-					->with('approval2', $approval2)
-					->with('approval3', $approval3)
-					, 200, $headers);
+									->with('user', $user)
+									->with('approval', $approval)
+									->with('approval2', $approval2)
+									->with('approval3', $approval3)
+									->with('aUnit', $aUnit)
+									->with('aDocType', $aDocType)
+									, 200, $headers);
+				
 			}
 			else 
 			{

@@ -129,6 +129,7 @@ class ApprovalController extends \BaseController {
 	{
 		$input = Input::all();
 		$user = Auth::user();
+		$checkin = Checkin::Find($id);
 		
 		if($input['status' . $id] != 1)
 		{
@@ -144,9 +145,29 @@ class ApprovalController extends \BaseController {
 			);
 		}
 		
+		if($checkin['status'] == 3)
+		{
+			if($input['requestType'] == 1)
+			{
+				$rules = array_merge($rules, array('checkbox1' => 'required', 'checkbox2' => 'required', 'checkbox3' => 'required'));
+			} 
+			elseif($input['requestType'] == 2)
+			{
+				$rules = array_merge($rules, array('checkbox1' => 'required', 'checkbox2' => 'required', 'checkbox3' => 'required', 'checkbox4' => 'required'));
+			}
+			elseif($input['requestType'] == 3)
+			{
+				$rules = array_merge($rules, array('checkbox1' => 'required', 'checkbox2' => 'required'));
+			}
+		}
+		
 		$messages = array(
 			'note' . $id . '.required' => 'Note is required.',
-			'status' . $id . '.required' => 'Status is required.'
+			'status' . $id . '.required' => 'Status is required.',
+			'checkbox1.required' => 'All Checkbox are required.',
+			'checkbox2.required' => 'All Checkbox are required.',
+			'checkbox3.required' => 'All Checkbox are required.',
+			'checkbox4.required' => 'All Checkbox are required.'
 		);
 		
 		$validation = Validator::make(Input::all(), $rules, $messages);
@@ -158,8 +179,8 @@ class ApprovalController extends \BaseController {
 		}
 		else 
 		{
-			$input = Input::all();
-			$checkin = Checkin::Find($id);
+			//$input = Input::all();
+			//$checkin = Checkin::Find($id);
 			$status = $checkin['status'] +  $input['status' . $id];
 			
 			date_default_timezone_set("Asia/Manila"); 

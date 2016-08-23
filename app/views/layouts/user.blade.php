@@ -64,6 +64,9 @@
             			<li>{{ HTML::link('report', 'Reports') }}</li>
             		@endif
         			<li>{{ HTML::link('status', 'History') }}</li>
+        			@if($user->user == 1)
+        				<li>{{ HTML::link('maintenance', 'Maintenance') }}</li>
+        			@endif
       			</ul>
       			{{ Form::open(array('route' => 'search.store', 'class'=>'navbar-form navbar-left', 'role'=>'search')) }}
 					<div class="form-group">
@@ -85,18 +88,19 @@
 					<li>{{ HTML::link('logout', 'Logout') }}</li>
 				</ul>
 				<?php if(!empty($user->firstname) && !empty($user->lastname)): ?>
-     				<p class="navbar-text navbar-right"><small>Signed in as {{ $user->firstname . " " . $user->lastname . "."}}</small></p>
+     				<p class="navbar-text navbar-right"><small>Signed in as {{ $user->firstname . "." }}</small></p>
      			<?php endif; ?>
 			</div><!--collapse navbar-collapse navbar-right"-->
 		</nav>
-		<div id='content'>
+		<div id='content' style="min-height: 610px" >
 			@yield('content')
 		</div><!--content-->
+		
 		<div class="panel-footer">
 			&copy; 2014 Computer Professionals, Inc. &middot; All Rights Reserved.
 		</div><!--panel-footer-->	
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     	<script src="../js/bootstrap.min.js"></script>
-    		@yield('script')
+    	@yield('script')
 	</body>
 </html>

@@ -10,6 +10,7 @@
 	<?php endif; ?>
 	<?php date_default_timezone_set("Asia/Manila"); ?>
 	<?php $today = date("M j, Y g:ia"); ?>
+	
 	{{ Form::open(array('route' => 'checkin.store', 'files' => true, 'class'=>'form-horizontal', 'role'=>'form')) }}
 		<div class="row">
 			<div class="col-sm-1">&nbsp;&nbsp;</div>
@@ -38,19 +39,7 @@
 				<label for="unit" class="col-sm-4 control-label input-sm">Unit<font color="red">*</font></label>
 				<div class="col-sm-8">
 					<div class="col-sm-8 @if ($errors->has('unit')) has-error @endif">
-      					{{ Form::select('unit', array('' => '', 
-      												'1' => 'Training', 
-      												'2' => 'Business Development', 
-      												'3' => 'HR', 
-      												'4' => 'Finance', 
-      												'5' => 'Service Delivery',
-      												'6' => 'Projects',
-													'7' => 'Document Control',
-													'8' => 'Business Review',
-													'9' => 'IT',
-													'10' => 'GENiiSYS Services',
-													'11' => 'GENiiSYS Product Dev\'t',
-													'12' => 'Admin'), null, array('class' => 'form-control input-sm')) }}
+      					{{ Form::select('unit', $aUnit, null, array('class' => 'form-control input-sm')) }}
 					</div>
 					<div class="col-sm-4">
 					</div>
@@ -64,20 +53,8 @@
 			<div class="col-sm-5">
 				<label for="documentType" class="col-sm-4 control-label input-sm">Type of Document<font color="red">*</font></label>
 				<div class="col-sm-8">
-					<div class="col-sm-8 @if ($errors->has('documentType')) has-error @endif">
-						{{ Form::select('documentType', array('' => '', 
-      												'1' => 'QM', 
-      												'2' => 'PM', 
-      												'3' => 'SQ', 
-      												'4' => 'QS',
-													'5' => 'ML',
-													'6' => 'WI',
-													'7' => 'JD',
-													'8' => 'FO',
-													'9' => 'ST',
-													'10' => 'CL',
-													'11' => 'GD',
-													'12' => 'TM'), null, array('class' => 'form-control input-sm')) }}
+					<div class="col-sm-8 @if ($errors->has('documentType')) has-error @endif">							
+						{{ Form::select('documentType', $aDocType, null, array('class' => 'form-control input-sm')) }}								
 					</div>
 					<div class="col-sm-4">
 					</div>
