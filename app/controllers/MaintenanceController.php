@@ -286,6 +286,7 @@ class MaintenanceController extends \BaseController {
 
 			if($validation->fails())
 			{
+				//	return Redirect::back()->withInput()->withErrors($validation->messages());
 				//	Rochelle Villaruz : replaced withInput()-> with with('edit', $action)->
 				return Redirect::back()->with('edit', $action)->withErrors($validation->messages());
 
