@@ -13,7 +13,7 @@ class MaintenanceController extends \BaseController {
 		$headers['Expires'] = 'Tue, 1 Jan 1980 00:00:00 GMT';
 		$headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0';
 		$headers['Pragma'] = 'no-cache';
-		
+
 		if(Auth::check())
 		{
 			if(Auth::user()->status == 1)
@@ -26,7 +26,7 @@ class MaintenanceController extends \BaseController {
 				$aUsers = User::All();
 				$aUnit = Unit::All();
 				$aDocType = DocType::All();
-				
+
 				return Response::make(View::make('maintenance')
 					->with('user', $user)
 					->with('approval', $approval)
@@ -37,14 +37,14 @@ class MaintenanceController extends \BaseController {
 					->with('aDocType', $aDocType)
 					, 200, $headers);
 			}
-			else 
+			else
 			{
 				Auth::logout();
 				Session::flash('message', "Please contact Webmaster.");
 				return Redirect::back();
 			}
 		}
-		
+
 		Auth::logout();
 		return View::make('index');
 	}
@@ -69,7 +69,7 @@ class MaintenanceController extends \BaseController {
 	public function store()
 	{
 		$input = Input::All();
-		
+
 		if($input['action'] == 'createUser')
 		{
 			$recent = 1;
@@ -80,7 +80,7 @@ class MaintenanceController extends \BaseController {
 				'lastName' => 'required',
 				'email' => 'required'
 			);
-			
+
 			$messages = array(
 				'username.required' => 'User Name is required.',
 				'password.required' => 'Password is required.',
@@ -88,17 +88,17 @@ class MaintenanceController extends \BaseController {
 				'lastName.required' => 'Last Name is required.',
 				'email.required' => 'Email is required.'
 			);
-			
+
 			$validation = Validator::make(Input::all(), $rules, $messages);
-			
+
 			if($validation->fails())
 			{
 				return Redirect::back()->withInput()->withErrors($validation->messages());
 			}
-			else 
+			else
 			{
 				$test = DB::table('users')->where('username', $input['username']);
-				
+
 				if($test->count())
 				{
 					Session::flash('message', "Username already exist.");
@@ -106,9 +106,9 @@ class MaintenanceController extends \BaseController {
 				}
 				else
 				{
-					
+
 					$aPrivilege = array('admin', 'unitHead', 'qmr', 'dc');
-			
+
 					foreach($aPrivilege as $privileges)
 					{
 						if(isset($input['privileges']))
@@ -120,7 +120,7 @@ class MaintenanceController extends \BaseController {
 									$aPriv[$privileges] = 1;
 								}
 							}
-						
+
 							if(!isset($aPriv[$privileges]))
 							{
 								$aPriv[$privileges] = 0;
@@ -131,7 +131,7 @@ class MaintenanceController extends \BaseController {
 							$aPriv[$privileges] = 0;
 						}
 					}
-					
+
 					User::create([
 						'username' => $input['username'],
 						'password' => Hash::make($input['password']),
@@ -144,34 +144,34 @@ class MaintenanceController extends \BaseController {
 						'qmr' => $aPriv['qmr'],
 						'dcon' => $aPriv['dc'],
 					]);
-					
+
 					Session::flash('message', "Successfully created user.");
 					return Redirect::back();
 				}
 			}
 		}
-		elseif ($input['action'] == 'addUnit') 
+		elseif ($input['action'] == 'addUnit')
 		{
 			$rules = array(
 				'unitName' => 'required',
 				'unitDesc' => 'required'
 			);
-			
+
 			$messages = array(
 				'unitName.required' => 'Name is required.',
 				'unitDesc.required' => 'Description is required.'
 			);
-			
+
 			$validation = Validator::make(Input::all(), $rules, $messages);
-			
+
 			if($validation->fails())
 			{
 				return Redirect::back()->withInput()->withErrors($validation->messages());
 			}
-			else 
+			else
 			{
 				$test = DB::table('unit')->where('name', $input['unitName']);
-				
+
 				if($test->count())
 				{
 					Session::flash('message', "Name already exist.");
@@ -184,34 +184,34 @@ class MaintenanceController extends \BaseController {
 						'description' => $input['unitDesc'],
 						'status' => 1
 					]);
-					
+
 					Session::flash('message', "Successfully added a unit.");
 					return Redirect::back();
 				}
 			}
 		}
-		elseif ($input['action'] == 'addDocType') 
+		elseif ($input['action'] == 'addDocType')
 		{
 			$rules = array(
 				'docTypeName' => 'required',
 				'docTypeDesc' => 'required'
 			);
-			
+
 			$messages = array(
 				'docTypeName.required' => 'Name is required.',
 				'docTypeDesc.required' => 'Description is required.'
 			);
-			
+
 			$validation = Validator::make(Input::all(), $rules, $messages);
-			
+
 			if($validation->fails())
 			{
 				return Redirect::back()->withInput()->withErrors($validation->messages());
 			}
-			else 
+			else
 			{
 				$test = DB::table('doctype')->where('name', $input['docTypeName']);
-				
+
 				if($test->count())
 				{
 					Session::flash('message', "Name already exist.");
@@ -224,7 +224,7 @@ class MaintenanceController extends \BaseController {
 						'description' => $input['docTypeDesc'],
 						'status' => 1
 					]);
-					
+
 					Session::flash('message', "Successfully added a Type of Document.");
 					return Redirect::back();
 				}
@@ -266,7 +266,7 @@ class MaintenanceController extends \BaseController {
 	public function update($id)
 	{
 		$input = Input::All();
-		
+
 		if($input['action'] == 'editUser')
 		{
 			$action = 1;
@@ -275,25 +275,25 @@ class MaintenanceController extends \BaseController {
 				'updateLastName' => 'required',
 				'updateEmail' => 'required'
 			);
-			
+
 			$messages = array(
 				'updateFirstName.required' => 'First Name is required.',
 				'updateLastName.required' => 'Last Name is required.',
 				'updateEmail.required' => 'Email is required.'
 			);
-			
+
 			$validation = Validator::make(Input::all(), $rules, $messages);
-			
+
 			if($validation->fails())
-			{				
-				//	Rochelle Villaruz : replaced withInput()-> with with('edit', $action)-> 
-				return Redirect::back()->with('edit', $action)->withErrors($validation->messages()); 
-				
+			{
+				//	Rochelle Villaruz : replaced withInput()-> with with('edit', $action)->
+				return Redirect::back()->with('edit', $action)->withErrors($validation->messages());
+
 			}
-			else 
+			else
 			{
 				$aPrivilege = array('status', 'admin', 'unitHead', 'qmr', 'dc');
-			
+
 				foreach($aPrivilege as $privileges)
 				{
 					if(isset($input['uPrivileges']))
@@ -305,7 +305,7 @@ class MaintenanceController extends \BaseController {
 								$uPriv[$privileges] = 1;
 							}
 						}
-					
+
 						if(!isset($uPriv[$privileges]))
 						{
 							$uPriv[$privileges] = 0;
@@ -316,9 +316,9 @@ class MaintenanceController extends \BaseController {
 						$uPriv[$privileges] = 0;
 					}
 				}
-				
+
 				$updateUser = User::Find($id);
-				
+
 				$updateUser->firstname = $input['updateFirstName'];
 				$updateUser->lastname = $input['updateLastName'];
 				$updateUser->email = $input['updateEmail'];
@@ -328,7 +328,7 @@ class MaintenanceController extends \BaseController {
 				$updateUser->qmr = $uPriv['qmr'];
 				$updateUser->dcon = $uPriv['dc'];
 				$updateUser->save();
-				
+
 				Session::flash('message', "Successfully updated user.");
 				return Redirect::back();
 			}
@@ -339,15 +339,15 @@ class MaintenanceController extends \BaseController {
 			{
 				$status = 1;
 			}
-			else 
+			else
 			{
 				$status = 0;
 			}
-			
+
 			$updateUnit = unit::Find($id);
 			$updateUnit->status = $status;
 			$updateUnit->save();
-				
+
 			Session::flash('message', "Successfully updated unit.");
 			return Redirect::back();
 		}
@@ -357,19 +357,19 @@ class MaintenanceController extends \BaseController {
 			{
 				$status = 1;
 			}
-			else 
+			else
 			{
 				$status = 0;
 			}
-			
+
 			$updateDocType = DocType::Find($id);
 			$updateDocType->status = $status;
 			$updateDocType->save();
-				
+
 			Session::flash('message', "Successfully updated unit.");
 			return Redirect::back();
 		}
-		
+
 	}
 
 
